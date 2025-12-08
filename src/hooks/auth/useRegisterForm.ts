@@ -1,0 +1,26 @@
+import { useRegister } from './useAuth';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+export const useRegisterForm = () => {
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  const registerSchema = z.object({
+    name: z.string().min(2, 'Name is required'),
+    email: z.email('Invalid email'),
+    password: z.string().regex(passwordRegex, 'Password must contain uppercase, lowercase, number and special char'),
+  });
+  const { mutate: register, isPending } = useRegister();
+
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { name: '', email: '', password: '' },
+  });
+
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    register(values);
+  };
+
+  return { form, onSubmit, isPending };
+};
