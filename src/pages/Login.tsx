@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useLoginForm } from '@/hooks';
 import { Link } from 'react-router-dom';
+import GoogleLoginButton from '@/components/auth/GoogleSignInButton';
 
 const Login = () => {
   const { form, onSubmit, isPending } = useLoginForm();
@@ -18,6 +19,7 @@ const Login = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <GoogleLoginButton />
               <FormField
                 control={form.control}
                 name="email"

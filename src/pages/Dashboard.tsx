@@ -1,5 +1,5 @@
 import { useCurrentUser, useFinancialOrders } from '@/hooks';
-import { CreateFinancialOrderDialogForm, FinancialInfo } from '@/components';
+import { CreateFinancialOrderDialogForm, FinancialInfo, LogoutButton } from '@/components';
 
 const Dashboard = () => {
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
@@ -10,6 +10,7 @@ const Dashboard = () => {
     <div className="p-8 space-y-8">
       <div className="flex flex-col justify-between items-center gap-5">
         <h1 className="text-3xl font-bold">Welcome back, {user?.name}</h1>
+        <LogoutButton />
 
         <CreateFinancialOrderDialogForm />
 

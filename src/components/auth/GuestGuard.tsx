@@ -2,15 +2,15 @@ import { useCurrentUser } from '@/hooks';
 import { Navigate, Outlet } from 'react-router-dom';
 import { Spinner } from '../ui/spinner';
 
-export const AuthGuard = () => {
-  const { data: user, isLoading, isError } = useCurrentUser();
+export const GuestGuard = () => {
+  const { data: user, isLoading } = useCurrentUser();
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  if (isError || !user) {
-    return <Navigate to="/login" replace />;
+  if (user) {
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;

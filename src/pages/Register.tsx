@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useRegisterForm } from '@/hooks';
 import { Link } from 'react-router-dom';
+import GoogleLoginButton from '@/components/auth/GoogleSignInButton';
 
 const Register = () => {
   const { form, onSubmit, isPending } = useRegisterForm();
@@ -18,6 +19,7 @@ const Register = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <GoogleLoginButton />
               <FormField
                 control={form.control}
                 name="email"
