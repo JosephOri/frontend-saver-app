@@ -1,6 +1,7 @@
 import { useCurrentUser } from '@/hooks';
 import { Navigate, Outlet } from 'react-router-dom';
 import { Spinner } from '../ui/spinner';
+import Layout from '@/Layout';
 
 export const AuthGuard = () => {
   const { data: user, isLoading, isError } = useCurrentUser();
@@ -13,5 +14,9 @@ export const AuthGuard = () => {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
 };

@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { Toaster } from 'sonner';
 import JoinHouseholdPage from './pages/JoinHouseholdPage';
+import Inbox from './pages/Inbox';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
 
         <Route element={<AuthGuard />}>
           <Route path="/join-household" element={<JoinHouseholdPage />} />
+          <Route path="/inbox" element={<Inbox />} />
           <Route element={<HouseholdGuard />}>
             <Route path="/" element={<Dashboard />} />
           </Route>
