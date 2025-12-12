@@ -18,7 +18,6 @@ function App() {
 
         <Route element={<AuthGuard />}>
           <Route path="/join-household" element={<JoinHouseholdPage />} />
-
           <Route element={<HouseholdGuard />}>
             <Route path="/" element={<Dashboard />} />
           </Route>

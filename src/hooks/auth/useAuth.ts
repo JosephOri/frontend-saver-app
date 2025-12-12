@@ -10,7 +10,6 @@ export const useCurrentUser = () => {
       const { data } = await apiClient.get<User>('/users/me');
       return data;
     },
-    retry: false,
   });
 };
 

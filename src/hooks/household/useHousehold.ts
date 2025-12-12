@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import apiClient from '../../lib/axios';
+import { apiClient } from '@/lib';
+import { useNavigate } from 'react-router-dom';
 
 export const useCreateHousehold = () => {
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate()
+  
   return useMutation({
     mutationFn: async () => {
       const { data } = await apiClient.post('/household', {});
@@ -11,6 +13,7 @@ export const useCreateHousehold = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      navigate('/')
     },
   });
 };
