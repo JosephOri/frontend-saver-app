@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import apiClient from '@/lib/axios';
+import { apiClient } from '@/lib';
 import type { FinancialOrder, CreateFinancialOrderDTO } from '@/lib/typings';
 
 export const useFinancialOrders = () => {

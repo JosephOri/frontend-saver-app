@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import apiClient from '@/lib/axios';
-import type { LoginResponse } from '@/lib/typings';
+import { apiClient } from '@/lib';
+import type { User } from '@/lib/typings';
 import { useNavigate } from 'react-router-dom';
 
 export const useCurrentUser = () => {
   return useQuery({
     queryKey: ['currentUser'],
     queryFn: async () => {
-      const { data } = await apiClient.get<LoginResponse>('/users/me');
+      const { data } = await apiClient.get<User>('/users/me');
       return data;
     },
     retry: false,
@@ -48,7 +48,11 @@ export const useRegister = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (userData: { name: string; email: string; password: string }) => {
+    mutationFn: async (userData: {
+      name: string;
+      email: string;
+      password: string;
+    }) => {
       await apiClient.post('/auth/signup', userData);
     },
     onSuccess: () => {
