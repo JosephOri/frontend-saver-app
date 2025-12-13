@@ -1,13 +1,13 @@
 import { useCurrentUser } from '@/hooks';
 import { Navigate, Outlet } from 'react-router-dom';
-import { Spinner } from '../ui/spinner';
 import Layout from '@/Layout';
+import Loading from '../common/Loading';
 
 export const AuthGuard = () => {
   const { data: user, isLoading, isError } = useCurrentUser();
 
   if (isLoading) {
-    return <Spinner />;
+    return <Loading />;
   }
 
   if (isError || !user) {
