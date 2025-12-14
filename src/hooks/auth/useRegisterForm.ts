@@ -7,8 +7,14 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name is required'),
+  userName: z.string(),
   email: z.email('Invalid email'),
-  password: z.string().regex(passwordRegex, 'Password must contain uppercase, lowercase, number and special char'),
+  password: z
+    .string()
+    .regex(
+      passwordRegex,
+      'Password must contain uppercase, lowercase, number and special char',
+    ),
 });
 
 export const useRegisterForm = () => {
@@ -16,7 +22,7 @@ export const useRegisterForm = () => {
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { name: '', email: '', password: '' },
+    defaultValues: { name: '', email: '', password: '', userName: '' },
   });
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {

@@ -1,7 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { useRegisterForm } from '@/hooks';
 import { Link } from 'react-router-dom';
 import GoogleLoginButton from '@/components/auth/GoogleSignInButton';
@@ -40,7 +53,11 @@ const Register = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="********" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="********"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -59,6 +76,19 @@ const Register = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="userName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>userName</FormLabel>
+                    <FormControl>
+                      <Input placeholder="JohnDoe" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <Button type="submit" className="w-full" disabled={isPending}>
                 {isPending ? 'Registering...' : 'Submit'}
               </Button>
@@ -66,7 +96,7 @@ const Register = () => {
           </Form>
           <div className="mt-4 text-center text-sm">
             Already have an account?{' '}
-            <Link to="/login" className="underline text-primary">
+            <Link to="/login" className="text-primary underline">
               Login here
             </Link>
           </div>
