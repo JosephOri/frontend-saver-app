@@ -1,5 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { FaEye } from 'react-icons/fa';
+import { LuEyeClosed } from 'react-icons/lu';
+
 import {
   Card,
   CardContent,
@@ -18,9 +21,11 @@ import {
 import { useRegisterForm } from '@/hooks';
 import { Link } from 'react-router-dom';
 import GoogleLoginButton from '@/components/auth/GoogleSignInButton';
+import { useState } from 'react';
 
 const Register = () => {
   const { form, onSubmit, isPending } = useRegisterForm();
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
@@ -52,13 +57,21 @@ const Register = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="********"
-                        {...field}
-                      />
-                    </FormControl>
+                    <div className="flex justify-center">
+                      <FormControl>
+                        <Input
+                          type={isPasswordShown ? 'text' : 'password'}
+                          placeholder="********"
+                          {...field}
+                        />
+                      </FormControl>
+                      <div
+                        className="cursor-pointer self-center"
+                        onClick={() => setIsPasswordShown((prev) => !prev)}
+                      >
+                        {isPasswordShown ? <FaEye /> : <LuEyeClosed />}
+                      </div>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
