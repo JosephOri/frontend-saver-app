@@ -11,7 +11,7 @@ export const Loading = () => {
         width: '100vw',
       }}
     >
-      <Spinner height={90} width={90} />
+      <Spinner height={100} width={100} />
     </div>
   );
 };
