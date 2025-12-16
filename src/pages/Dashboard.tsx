@@ -1,11 +1,14 @@
 import { useCurrentUser, useFinancialOrders } from '@/hooks';
 import {
-  CreateFinancialOrderDialogForm,
   FinancialInfo,
   LogoutButton,
   AddMemberDialog,
   Loading,
 } from '@/components';
+import { ChartAreaInteractive } from '@/components/chart-area-interactive';
+import { DataTable } from '@/components/data-table';
+import { SectionCards } from '@/components/section-cards';
+import data from '../app/dashboard/data.json';
 
 const Dashboard = () => {
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
@@ -13,16 +16,26 @@ const Dashboard = () => {
 
   if (isUserLoading || isOrdersLoading) return <Loading />;
   return (
-    <div className="space-y-8 p-8">
-      <div className="flex flex-col items-center justify-between gap-5">
-        <h1 className="text-3xl font-bold">Welcome back, {user?.name}</h1>
-        <LogoutButton />
+    <div className="p-4">
+      <h1 className="text-center text-3xl font-bold">
+        Welcome back, {user?.name}
+      </h1>
+      <LogoutButton />
 
-        <CreateFinancialOrderDialogForm />
+      <AddMemberDialog />
 
-        <FinancialInfo orders={orders || []} />
+      <FinancialInfo orders={orders || []} />
 
-        <AddMemberDialog />
+      <div className="flex flex-1 flex-col">
+        <div className="@container/main flex flex-1 flex-col gap-2">
+          <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <SectionCards />
+            <div className="px-4 lg:px-6">
+              <ChartAreaInteractive />
+            </div>
+            <DataTable data={data} />
+          </div>
+        </div>
       </div>
     </div>
   );
