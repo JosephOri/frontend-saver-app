@@ -1,7 +1,7 @@
 import { useCurrentUser } from '@/hooks';
 import { Navigate, Outlet } from 'react-router-dom';
 import Layout from '@/Layout';
-import Loading from '../common/Loading';
+import { Loading } from '../common/Loading';
 
 export const AuthGuard = () => {
   const { data: user, isLoading, isError } = useCurrentUser();
