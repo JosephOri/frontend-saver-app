@@ -9,7 +9,7 @@ const loginSchema = z.object({
 });
 
 export const useLoginForm = () => {
-  const { mutate: login, isPending } = useLogin();
+  const { mutate: login, isPending, error } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -20,5 +20,5 @@ export const useLoginForm = () => {
     login(values);
   };
 
-  return { form, onSubmit, isPending };
+  return { form, onSubmit, isPending, error };
 };

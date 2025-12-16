@@ -71,7 +71,7 @@ const Login = () => {
                         className="cursor-pointer self-center"
                         onClick={() => setIsPasswordShown((prev) => !prev)}
                       >
-                        {isPasswordShown ? <FaEye /> : <LuEyeClosed />}
+                        {isPasswordShown ? <LuEyeClosed /> : <FaEye />}
                       </div>
                     </div>
                     <FormMessage />
