@@ -4,8 +4,8 @@ import {
   FinancialInfo,
   LogoutButton,
   AddMemberDialog,
+  Loading,
 } from '@/components';
-import Loading from '@/components/common/Loading';
 
 const Dashboard = () => {
   const { data: user, isLoading: isUserLoading } = useCurrentUser();

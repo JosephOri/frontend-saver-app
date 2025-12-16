@@ -1,6 +1,6 @@
 import { Spinner } from '../ui/spinner';
 
-const Loading = () => {
+export const Loading = () => {
   return (
     <div
       style={{
@@ -15,5 +15,3 @@ const Loading = () => {
     </div>
   );
 };
-
-export default Loading;
