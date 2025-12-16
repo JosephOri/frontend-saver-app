@@ -1,1 +1,1 @@
-export * from './NotificationToast';
+export * from './NotificationCard';
