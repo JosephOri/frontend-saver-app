@@ -1,0 +1,89 @@
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useCurrentUser } from '@/hooks';
+import { apiClient, type InvitationNotification } from '@/lib';
+import { useState, type FormEvent } from 'react';
+import { toast } from 'sonner';
+
+export const AddMemberDialog = () => {
+  const { data: user } = useCurrentUser();
+  const [userName, setUserName] = useState('');
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('handlesubmit');
+
+    if (!user) {
+      console.log('no user');
+      return;
+    }
+
+    try {
+      const payload: InvitationNotification = {
+        adminId: user.id,
+        householdId: user.householdId || '',
+        targetUserName: userName,
+      };
+      console.log(payload);
+      await apiClient.post('household/invite', payload);
+      toast.success('Invitation has been sent');
+      setUserName('');
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to send invitation');
+    }
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Invite a Member</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-2xl">
+        <form onSubmit={handleSubmit} className="grid gap-4">
+          <DialogHeader>
+            <DialogTitle>Add a member</DialogTitle>
+            <DialogDescription>
+              Add a new member to your household by entering the username of who
+              you want to invite
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4">
+            <div className="grid gap-3">
+              <Label htmlFor="username-1">Username</Label>
+              <Input
+                id="username-1"
+                name="userName"
+                type="text"
+                placeholder="johnDoe"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline" type="button">
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button type="submit">Send Invitation</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
