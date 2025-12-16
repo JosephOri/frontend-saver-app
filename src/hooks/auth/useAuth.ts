@@ -10,6 +10,8 @@ export const useCurrentUser = () => {
       const { data } = await apiClient.get<User>('/users/me');
       return data;
     },
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 24 * 7,
     retry: false,
   });
 };
