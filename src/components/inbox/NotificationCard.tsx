@@ -28,7 +28,6 @@ export const NotificationCard = ({
       adminId: notification.adminId,
       targetUserName: notification.targetUserName,
     };
-    console.log('dto: ', dto);
     addMember(dto);
   };
 

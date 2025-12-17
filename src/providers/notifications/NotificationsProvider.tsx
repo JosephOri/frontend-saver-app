@@ -18,15 +18,11 @@ import {
 import { toast } from 'sonner';
 import { useCurrentUser } from '@/hooks';
 
+const { NOTIFICATIONS } = localStorageKeys;
+
 interface Props {
   children: ReactNode;
 }
-
-const { NOTIFICATIONS } = localStorageKeys;
-
-const getLocalStorageNotifications = () => {
-  return JSON.parse(localStorage.getItem(NOTIFICATIONS) || '[]');
-};
 
 export const NotificationsProvider = ({ children }: Props) => {
   const [notifications, setNotifications] = useState<InboxNotification[]>(
@@ -53,15 +49,11 @@ export const NotificationsProvider = ({ children }: Props) => {
         });
         const notification = {
           ...parsedData,
-          id: crypto.randomUUID().toString(),
         };
         let storedNotifications = getLocalStorageNotifications();
         storedNotifications = [...storedNotifications, notification];
-        localStorage.setItem(
-          NOTIFICATIONS,
-          JSON.stringify(storedNotifications),
-        );
 
+        setLocalStorageNotifications(storedNotifications);
         setNotifications(storedNotifications);
       } catch (err) {
         console.error('Error parsing SSE data:', err);
@@ -81,7 +73,7 @@ export const NotificationsProvider = ({ children }: Props) => {
     const storedNotifications = getLocalStorageNotifications().filter(
       (n) => n.id !== id,
     );
-    localStorage.setItem(NOTIFICATIONS, JSON.stringify(storedNotifications));
+    setLocalStorageNotifications(storedNotifications);
     setNotifications(storedNotifications);
   }, []);
 
@@ -99,3 +91,11 @@ export const NotificationsProvider = ({ children }: Props) => {
     </NotificationsContext.Provider>
   );
 };
+
+function getLocalStorageNotifications() {
+  return JSON.parse(localStorage.getItem(NOTIFICATIONS) || '[]');
+}
+
+function setLocalStorageNotifications(notifications: InboxNotification) {
+  localStorage.setItem(NOTIFICATIONS, JSON.stringify(notifications));
+}
