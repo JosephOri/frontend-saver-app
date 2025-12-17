@@ -15,20 +15,18 @@ import { Link, useLocation } from 'react-router-dom';
 import { NavUser } from './ui/nav-user';
 import { AddMemberDialog } from './household-dashboard';
 
-const items = {
-  application: [
-    {
-      title: 'Home',
-      url: '/',
-      icon: Home,
-    },
-    {
-      title: 'Inbox',
-      url: '/inbox',
-      icon: Inbox,
-    },
-  ],
-};
+const items = [
+  {
+    title: 'Home',
+    url: '/',
+    icon: Home,
+  },
+  {
+    title: 'Inbox',
+    url: '/inbox',
+    icon: Inbox,
+  },
+];
 
 export function AppSidebar() {
   const location = useLocation();
@@ -42,7 +40,7 @@ export function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.application.map((item) => (
+              {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
