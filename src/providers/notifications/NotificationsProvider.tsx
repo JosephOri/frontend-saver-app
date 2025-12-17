@@ -15,7 +15,7 @@ import {
   NotificationsContext,
   type NotificationsContexType,
 } from './NotificationsContext';
-
+import { toast } from 'sonner';
 import { useCurrentUser } from '@/hooks';
 
 interface Props {
@@ -44,7 +44,13 @@ export const NotificationsProvider = ({ children }: Props) => {
     eventSource.onmessage = (event) => {
       try {
         const parsedData: InvitationNotification = JSON.parse(event.data);
-        console.log('SSE Event Received:', parsedData);
+        toast('You have a new notification', {
+          description: parsedData.message,
+          action: {
+            label: 'Go to inbox',
+            onClick: () => window.location.replace('/inbox'),
+          },
+        });
         const notification = {
           ...parsedData,
           id: crypto.randomUUID().toString(),

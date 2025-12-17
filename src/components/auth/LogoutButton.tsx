@@ -1,25 +1,19 @@
-import { useLogout } from '@/hooks';
 import { Button } from '../ui/button';
-import { useState } from 'react';
 import { ConfirmModal } from '../common';
+import { useLogoutAction } from '@/hooks/auth/useLogoutActions';
 
 export const LogoutButton = () => {
-  const [open, setOpen] = useState(false);
-  const { mutate: logout, isPending } = useLogout();
-
-  const handleLogout = () => {
-    logout();
-  };
+  const { handleLogout, isPending, isOpen, setIsOpen } = useLogoutAction();
 
   return (
     <>
-      <Button variant={'destructive'} onClick={() => setOpen(true)}>
+      <Button variant={'destructive'} onClick={() => setIsOpen(true)}>
         Logout
       </Button>
 
       <ConfirmModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
         onConfirm={handleLogout}
         loading={isPending}
         title="Are you sure you want to logoout?"

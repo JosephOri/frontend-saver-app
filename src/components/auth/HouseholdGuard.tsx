@@ -1,6 +1,6 @@
 import { useCurrentUser } from '@/hooks';
 import { Navigate, Outlet } from 'react-router-dom';
-import Loading from '../common/Loading';
+import { Loading } from '../common/Loading';
 
 export const HouseholdGuard = () => {
   const { data: user, isLoading } = useCurrentUser();

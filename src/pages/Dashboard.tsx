@@ -1,11 +1,10 @@
 import { useCurrentUser, useFinancialOrders } from '@/hooks';
 import {
-  CreateFinancialOrderDialogForm,
   FinancialInfo,
-  LogoutButton,
-  AddMemberDialog,
   Loading,
+  CreateFinancialOrderDialogForm,
 } from '@/components';
+import { OrdersTable } from '@/components/household-dashboard/orders-table/OrdersTable';
 
 const Dashboard = () => {
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
@@ -13,17 +12,20 @@ const Dashboard = () => {
 
   if (isUserLoading || isOrdersLoading) return <Loading />;
   return (
-    <div className="space-y-8 p-8">
-      <div className="flex flex-col items-center justify-between gap-5">
-        <h1 className="text-3xl font-bold">Welcome back, {user?.name}</h1>
-        <LogoutButton />
+    <div className="p-4">
+      <h1 className="text-center text-3xl font-bold">
+        Welcome back, {user?.name}
+      </h1>
+      <CreateFinancialOrderDialogForm />
 
-        <CreateFinancialOrderDialogForm />
-
-        <FinancialInfo orders={orders || []} />
-
-        <AddMemberDialog />
-      </div>
+      {orders ? (
+        <div className="flex flex-col gap-6">
+          <FinancialInfo orders={orders} />
+          <OrdersTable data={orders} />
+        </div>
+      ) : (
+        <h1>Create first transaction to see data</h1>
+      )}
     </div>
   );
 };

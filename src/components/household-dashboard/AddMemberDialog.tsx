@@ -15,6 +15,8 @@ import { useCurrentUser } from '@/hooks';
 import { apiClient, type InvitationNotification } from '@/lib';
 import { useState, type FormEvent } from 'react';
 import { toast } from 'sonner';
+import { FcInvite } from 'react-icons/fc';
+import { SidebarMenuButton } from '../ui/sidebar';
 
 export const AddMemberDialog = () => {
   const { data: user } = useCurrentUser();
@@ -48,7 +50,10 @@ export const AddMemberDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Invite a Member</Button>
+        <SidebarMenuButton className="cursor-pointer">
+          <FcInvite />
+          <span>Invite a Member</span>
+        </SidebarMenuButton>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl">
         <form onSubmit={handleSubmit} className="grid gap-4">
