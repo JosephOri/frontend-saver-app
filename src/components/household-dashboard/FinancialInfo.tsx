@@ -2,7 +2,7 @@ import type { FinancialOrder } from '@/lib/typings';
 import { StatCard } from './StatCard';
 import { useMemo } from 'react';
 import { DollarSign, TrendingDown, TrendingUp } from 'lucide-react';
-import { CreateFinancialOrderDialogForm } from './CreateFinancialOrderDialogForm';
+import { OrdersTable } from './orders-table/OrdersTable';
 
 interface Props {
   orders: FinancialOrder[];
@@ -42,27 +42,6 @@ export const FinancialInfo = ({ orders }: Props) => {
           value={`₪${totalIncomeAmount - totalExpenseAmount}`}
           icon={DollarSign}
         />
-      </div>
-      <CreateFinancialOrderDialogForm />
-
-      <div className="rounded-md border p-4">
-        <h2 className="mb-4 text-xl font-semibold">Recent Transactions</h2>
-        <ul>
-          {orders?.map((order: FinancialOrder) => (
-            <li key={order.id} className="flex justify-between border-b py-2">
-              <span>
-                {order.category} ({order.name})
-              </span>
-              <span
-                className={
-                  order.type === 'expense' ? 'text-red-500' : 'text-green-500'
-                }
-              >
-                {order.type === 'expense' ? '-' : '+'}₪{order.amount}
-              </span>
-            </li>
-          ))}
-        </ul>
       </div>
     </>
   );
