@@ -1,5 +1,6 @@
 import { cn, type FinancialOrder } from '@/lib';
 import type { ColumnDef } from '@tanstack/react-table';
+import { CapitalizedText, TruncatedTextDialog } from '@/components/common';
 
 export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
   {
@@ -24,9 +25,18 @@ export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
     header: 'Category',
     cell: ({ row }) => {
       const category = String(row.getValue('category'));
-      const capitalizedCategory = `${category[0].toUpperCase()}${category.slice(1)}`;
 
-      return <div>{capitalizedCategory}</div>;
+      return <CapitalizedText text={category} />;
+    },
+  },
+  {
+    accessorKey: 'description',
+    header: 'Description',
+    cell: ({ row }) => {
+      const description = String(row.getValue('description'));
+      if (!description) return <div>No description.</div>;
+
+      return <TruncatedTextDialog text={description} title="Description" />;
     },
   },
   {
