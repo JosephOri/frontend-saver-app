@@ -25,24 +25,22 @@ export const FinancialInfo = ({ orders }: Props) => {
     );
   }, [orders]);
   return (
-    <>
-      <div className="grid gap-4 md:grid-cols-3">
-        <StatCard
-          title="Total Income"
-          value={`₪${totalIncomeAmount}`}
-          icon={TrendingUp}
-        />
-        <StatCard
-          title="Total Expenses"
-          value={`₪${totalExpenseAmount}`}
-          icon={TrendingDown}
-        />
-        <StatCard
-          title="Balance"
-          value={`₪${totalIncomeAmount - totalExpenseAmount}`}
-          icon={DollarSign}
-        />
-      </div>
-    </>
+    <div className="grid gap-4 md:grid-cols-3">
+      <StatCard
+        title="Total Income"
+        value={totalIncomeAmount}
+        icon={TrendingUp}
+      />
+      <StatCard
+        title="Total Expenses"
+        value={totalExpenseAmount}
+        icon={TrendingDown}
+      />
+      <StatCard
+        title="Balance"
+        value={totalIncomeAmount - totalExpenseAmount}
+        icon={DollarSign}
+      />
+    </div>
   );
 };

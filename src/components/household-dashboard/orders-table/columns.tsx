@@ -1,6 +1,10 @@
 import { cn, type FinancialOrder } from '@/lib';
 import type { ColumnDef } from '@tanstack/react-table';
-import { CapitalizedText, TruncatedTextDialog } from '@/components/common';
+import {
+  CapitalizedText,
+  FormatedNisCurrency,
+  TruncatedTextDialog,
+} from '@/components/common';
 
 export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
   {
@@ -49,10 +53,6 @@ export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('amount'));
       const type = row.getValue('type');
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'ILS',
-      }).format(amount);
 
       return (
         <div
@@ -61,7 +61,7 @@ export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
             `${type === 'expense' ? 'text-red-500' : 'text-green-500'}`,
           )}
         >
-          {formatted}
+          <FormatedNisCurrency amount={amount} />
         </div>
       );
     },

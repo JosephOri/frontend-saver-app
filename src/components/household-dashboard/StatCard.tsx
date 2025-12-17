@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type LucideIcon } from 'lucide-react';
+import { FormatedNisCurrency } from '../common';
 
 interface Props {
   title: string;
-  value: string | number;
+  value: number;
   icon: LucideIcon;
   description?: string;
 }
@@ -16,7 +17,9 @@ export const StatCard = ({ title, value, icon: Icon, description }: Props) => {
         <Icon className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
+        <div className="text-2xl font-bold">
+          <FormatedNisCurrency amount={value} />
+        </div>
         {description && (
           <p className="text-muted-foreground text-xs">{description}</p>
         )}

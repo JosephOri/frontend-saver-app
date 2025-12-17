@@ -2,3 +2,4 @@ export * from './ConfirmModel';
 export * from './Loading';
 export * from './TruncatedTextDialog';
 export * from './CapitalizedText';
+export * from './FormatedNisCurrency';
