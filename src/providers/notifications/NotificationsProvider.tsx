@@ -17,6 +17,7 @@ import {
 } from './NotificationsContext';
 import { toast } from 'sonner';
 import { useCurrentUser } from '@/hooks';
+import { Link } from 'react-router-dom';
 
 const { NOTIFICATIONS } = localStorageKeys;
 
@@ -43,8 +44,12 @@ export const NotificationsProvider = ({ children }: Props) => {
         toast('You have a new notification', {
           description: parsedData.message,
           action: {
-            label: 'Go to inbox',
-            onClick: () => window.location.replace('/inbox'),
+            label: <Link to={'/inbox'}>go to inbox</Link>,
+            onClick: () => {},
+          },
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
           },
         });
         const notification = {
@@ -71,7 +76,7 @@ export const NotificationsProvider = ({ children }: Props) => {
 
   const clearNotification = useCallback((id: string) => {
     const storedNotifications = getLocalStorageNotifications().filter(
-      (n) => n.id !== id,
+      (n: InboxNotification) => n.id !== id,
     );
     setLocalStorageNotifications(storedNotifications);
     setNotifications(storedNotifications);

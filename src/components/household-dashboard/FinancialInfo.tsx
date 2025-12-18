@@ -2,7 +2,6 @@ import type { FinancialOrder } from '@/lib/typings';
 import { StatCard } from './StatCard';
 import { useMemo } from 'react';
 import { DollarSign, TrendingDown, TrendingUp } from 'lucide-react';
-import { OrdersTable } from './orders-table/OrdersTable';
 
 interface Props {
   orders: FinancialOrder[];
