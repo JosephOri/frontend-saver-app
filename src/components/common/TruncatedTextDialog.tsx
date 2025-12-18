@@ -18,7 +18,7 @@ export const TruncatedTextDialog = ({ text, title }: Props) => {
   return (
     <Dialog>
       <DialogTrigger>
-        <div className="w-25 truncate" title={text}>
+        <div className="w-25 truncate text-start" title={text}>
           {text}
         </div>
       </DialogTrigger>
