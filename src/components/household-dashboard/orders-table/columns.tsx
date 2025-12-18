@@ -1,15 +1,12 @@
 import { cn, type FinancialOrder } from '@/lib';
 import type { ColumnDef } from '@tanstack/react-table';
-import {
-  CapitalizedText,
-  FormatedNisCurrency,
-  TruncatedTextDialog,
-} from '@/components/common';
+import { FormatedNisCurrency, TruncatedTextDialog } from '@/components/common';
 
 export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
   {
     accessorKey: 'type',
     header: 'Type',
+    filterFn: 'includesString',
     cell: ({ row }) => {
       const type = String(row.getValue('type'));
       return (
@@ -27,10 +24,11 @@ export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
   {
     accessorKey: 'category',
     header: 'Category',
+    filterFn: 'includesString',
     cell: ({ row }) => {
       const category = String(row.getValue('category'));
 
-      return <CapitalizedText text={category} />;
+      return <span className="capitalize">{category}</span>;
     },
   },
   {
