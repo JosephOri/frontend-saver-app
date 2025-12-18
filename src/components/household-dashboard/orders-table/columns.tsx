@@ -10,14 +10,14 @@ export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
     cell: ({ row }) => {
       const type = String(row.getValue('type'));
       return (
-        <div
+        <span
           className={cn(
             'left font-medium capitalize',
             `${type === 'expense' ? 'text-red-500' : 'text-green-500'}`,
           )}
         >
           {type}
-        </div>
+        </span>
       );
     },
   },
