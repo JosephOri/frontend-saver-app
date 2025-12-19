@@ -1,28 +1,28 @@
-import type { FinancialOrder } from '@/lib/typings';
+import type { Transactions } from '@/lib/typings';
 import { StatCard } from './StatCard';
 import { useMemo } from 'react';
 import { DollarSign, TrendingDown, TrendingUp } from 'lucide-react';
 
 interface Props {
-  orders: FinancialOrder[];
+  transactions: Transactions[];
 }
 
-export const FinancialInfo = ({ orders }: Props) => {
+export const FinancialInfo = ({ transactions }: Props) => {
   const totalIncomeAmount = useMemo(() => {
     return (
-      orders
+      transactions
         ?.filter((o) => o.type === 'income')
         .reduce((sum, o) => sum + o.amount, 0) || 0
     );
-  }, [orders]);
+  }, [transactions]);
 
   const totalExpenseAmount = useMemo(() => {
     return (
-      orders
+      transactions
         ?.filter((o) => o.type === 'expense')
         .reduce((sum, o) => sum + o.amount, 0) || 0
     );
-  }, [orders]);
+  }, [transactions]);
   return (
     <div className="grid gap-4 md:grid-cols-3">
       <StatCard

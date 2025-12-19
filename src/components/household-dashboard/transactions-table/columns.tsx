@@ -1,8 +1,8 @@
-import { cn, type FinancialOrder } from '@/lib';
+import { cn, type Transactions } from '@/lib';
 import type { ColumnDef } from '@tanstack/react-table';
 import { FormatedNisCurrency, TruncatedTextDialog } from '@/components/common';
 
-export const financialOrderColumns: ColumnDef<FinancialOrder>[] = [
+export const transactionColumns: ColumnDef<Transactions>[] = [
   {
     accessorKey: 'type',
     header: 'Type',

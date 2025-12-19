@@ -1,4 +1,4 @@
-import { useCreateOrder } from './useFinancialOrders';
+import { useCreateTransaction } from './useTransactions';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,8 +11,8 @@ const formSchema = z.object({
   type: z.enum(['income', 'expense', 'investment']),
 });
 
-export const useCreateFinancialOrderForm = () => {
-  const { mutate: createOrder, isPending } = useCreateOrder();
+export const useCreateTransactionsForm = () => {
+  const { mutate: createOrder, isPending } = useCreateTransaction();
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({

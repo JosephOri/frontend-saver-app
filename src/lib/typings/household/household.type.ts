@@ -1,9 +1,9 @@
 import type { User } from '../auth';
-import type { FinancialOrder } from '../financial-order';
+import type { Transactions } from '../transaction';
 
 export interface Household {
   id: string;
   adminId: string;
   participants: User[];
-  financialOrders: FinancialOrder[];
+  transactions: Transactions[];
 }

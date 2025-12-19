@@ -1,4 +1,4 @@
-import { type FinancialOrder } from '@/lib';
+import { type Transactions } from '@/lib';
 import {
   type ColumnDef,
   flexRender,
@@ -16,16 +16,16 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useMemo } from 'react';
-import { financialOrderColumns } from './columns';
+import { transactionColumns } from './columns';
 import { DropdownTypesFilter } from './DropdownTypesFilter';
 
 interface Props {
-  data: FinancialOrder[];
+  data: Transactions[];
 }
 
-export const OrdersTable = ({ data }: Props) => {
-  const columns: ColumnDef<FinancialOrder>[] = useMemo(
-    () => financialOrderColumns,
+export const TransactionsTable = ({ data }: Props) => {
+  const columns: ColumnDef<Transactions>[] = useMemo(
+    () => transactionColumns,
     [],
   );
 

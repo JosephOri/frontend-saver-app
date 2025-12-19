@@ -22,11 +22,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { useCreateFinancialOrderForm } from '@/hooks';
+import { useCreateTransactionsForm } from '@/hooks';
 
-export const CreateFinancialOrderDialogForm = () => {
+export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
-    useCreateFinancialOrderForm();
+    useCreateTransactionsForm();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { FaArrowDown } from 'react-icons/fa';
-import { FINANCIAL_ORDER_TYPES } from '@/lib';
+import { TRANSACTION_TYPES } from '@/lib';
 import type { Column } from '@tanstack/react-table';
 
 interface Props<TData, TValue> {
@@ -34,7 +34,7 @@ export const DropdownTypesFilter = <TData, TValue>({
         <DropdownMenuCheckboxItem onClick={() => handleFiilterChange('')}>
           All
         </DropdownMenuCheckboxItem>
-        {FINANCIAL_ORDER_TYPES.map((type) => (
+        {TRANSACTION_TYPES.map((type) => (
           <DropdownMenuCheckboxItem
             id={type}
             onClick={() => handleFiilterChange(type)}
