@@ -3,8 +3,8 @@ import {
   FinancialInfo,
   Loading,
   CreateTransactionDialogForm,
+  TransactionsTable,
 } from '@/components';
-import { TransactionsTable } from '@/components/household-dashboard/transactions-table/TransactionsTable';
 
 const Dashboard = () => {
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
