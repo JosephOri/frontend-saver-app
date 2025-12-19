@@ -38,9 +38,11 @@ export const OrdersTable = ({ data }: Props) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-md border p-3">
-        <h1 className="mb-2 text-xl">Filters</h1>
-        <DropdownTypesFilter column={table.getColumn('type')!} />
+      <div>
+        <h1 className="text-xl">Filters</h1>
+        <div className="rounded-md border p-3">
+          <DropdownTypesFilter column={table.getColumn('type')!} />
+        </div>
       </div>
       <Table>
         <TableHeader>
