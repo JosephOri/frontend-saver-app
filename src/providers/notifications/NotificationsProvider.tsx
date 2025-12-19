@@ -5,12 +5,11 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { localStorageKeys, SERVER_URL } from '@/lib';
 import {
-  localStorageKeys,
-  SERVER_URL,
   type InboxNotification,
   type InvitationNotification,
-} from '@/lib';
+} from '@repo/shared';
 import {
   NotificationsContext,
   type NotificationsContexType,

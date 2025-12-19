@@ -1,4 +1,4 @@
-import type { InboxNotification } from '@/lib';
+import type { InboxNotification } from '@repo/shared';
 import {
   Card,
   CardDescription,

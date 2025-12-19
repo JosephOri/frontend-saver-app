@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { FaArrowDown } from 'react-icons/fa';
-import { TRANSACTION_TYPES } from '@/lib';
+import { TRANSACTION_TYPES } from '@repo/shared';
 import type { Column } from '@tanstack/react-table';
 
 interface Props<TData, TValue> {

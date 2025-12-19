@@ -30,5 +30,5 @@
       ]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../../packages/shared/src/typings/auth", "../../packages/shared/src/typings/household", "../../packages/shared/src/typings/transaction"]
 }
