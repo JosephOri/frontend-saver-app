@@ -8,5 +8,5 @@ export const FormatedNisCurrency = ({ amount }: Props) => {
     currency: 'ILS',
   }).format(amount);
 
-  return <span>{formated}</span>;
+  return <span className="">{formated}</span>;
 };

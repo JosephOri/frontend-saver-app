@@ -26,6 +26,7 @@ export const useCreateTransactionsForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     createOrder(values, {
       onSuccess: () => {
         setIsOpen(false);

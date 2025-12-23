@@ -23,10 +23,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useCreateTransactionsForm } from '@/hooks';
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@repo/shared';
 
 export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
     useCreateTransactionsForm();
+  const currentTransactionType = form.watch('type');
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -82,10 +84,39 @@ export const CreateTransactionDialogForm = () => {
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Food, Rent, Salary..." {...field} />
-                  </FormControl>
+                  <FormLabel>category</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {currentTransactionType === 'expense' &&
+                        EXPENSE_CATEGORIES.map((category) => (
+                          <SelectItem
+                            key={category}
+                            value={category}
+                            className="capitalize"
+                          >
+                            {category}
+                          </SelectItem>
+                        ))}
+                      {currentTransactionType === 'income' &&
+                        INCOME_CATEGORIES.map((category) => (
+                          <SelectItem
+                            key={category}
+                            value={category}
+                            className="capitalize"
+                          >
+                            {category}
+                          </SelectItem>
+                        ))}
+                      {currentTransactionType === 'investment' && (
+                        <SelectItem value="investment">Investment</SelectItem>
+                      )}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -106,7 +137,7 @@ export const CreateTransactionDialogForm = () => {
             />
 
             <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? 'Saving...' : 'Add Order'}
+              {isPending ? 'Saving...' : 'Add Transaction'}
             </Button>
           </form>
         </Form>
