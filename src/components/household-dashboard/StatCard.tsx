@@ -19,7 +19,6 @@ export const StatCard = ({
   description,
   className = '',
 }: Props) => {
-  const isMobile = useIsMobile();
   return (
     <Card className={cn(className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 p-6">

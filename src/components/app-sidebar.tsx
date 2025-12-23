@@ -1,5 +1,3 @@
-import { Home, Inbox } from 'lucide-react';
-
 import {
   Sidebar,
   SidebarContent,
@@ -14,21 +12,10 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { NavUser } from './ui/nav-user';
 import { AddMemberDialog } from './household-dashboard';
-
-const items = [
-  {
-    title: 'Home',
-    url: '/',
-    icon: Home,
-  },
-  {
-    title: 'Inbox',
-    url: '/inbox',
-    icon: Inbox,
-  },
-];
+import { routes } from '@/lib';
 
 export function AppSidebar() {
+  const { protectedRoutes: items } = routes;
   const location = useLocation();
   return (
     <Sidebar>
@@ -41,15 +28,15 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.path}>
                   <SidebarMenuButton
                     asChild
-                    isActive={item.url === location.pathname}
+                    isActive={item.path === location.pathname}
                   >
-                    {item.url && (
-                      <Link to={item.url}>
+                    {item.path && (
+                      <Link to={item.path}>
                         <item.icon />
-                        <span>{item.title}</span>
+                        <span>{item.label}</span>
                       </Link>
                     )}
                   </SidebarMenuButton>
