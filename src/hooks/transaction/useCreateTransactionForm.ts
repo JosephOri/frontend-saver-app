@@ -9,6 +9,7 @@ const formSchema = z.object({
   category: z.string().min(2, 'Category is required'),
   description: z.string().optional(),
   type: z.enum(['income', 'expense', 'investment']),
+  date: z.date(),
 });
 
 export const useCreateTransactionsForm = () => {
@@ -22,6 +23,7 @@ export const useCreateTransactionsForm = () => {
       category: '',
       description: '',
       type: 'expense',
+      date: new Date(),
     },
   });
 

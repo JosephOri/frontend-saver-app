@@ -26,7 +26,7 @@ const Home = () => {
       <Link to="/dashboard">
         <Card className="hover:bg-accent/50 w-fit cursor-pointer transition-colors">
           <CardContent className="flex items-center gap-4 p-6">
-            {user.householdId ? (
+            {user?.householdId ? (
               <>
                 <div className="rounded-full bg-amber-100 p-3">
                   <Wallet className="h-6 w-6 text-amber-700" />

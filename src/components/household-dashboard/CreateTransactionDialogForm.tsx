@@ -24,7 +24,15 @@ import {
 } from '@/components/ui/dialog';
 import { useCreateTransactionsForm } from '@/hooks';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@repo/shared';
-import { PlusCircle } from 'lucide-react';
+import { CalendarIcon, PlusCircle } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
@@ -39,23 +47,26 @@ export const CreateTransactionDialogForm = () => {
           Add Transaction
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[75rem]">
         <DialogHeader>
           <DialogTitle>Add New Transaction</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 md:flex-row md:items-start"
+          >
             <FormField
               control={form.control}
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Type</FormLabel>
+                  <FormLabel className="text-muted-foreground">Type</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select type" />
+                        <SelectValue placeholder="Type" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -71,28 +82,16 @@ export const CreateTransactionDialogForm = () => {
 
             <FormField
               control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <FormControl>
-                    <Input type="number" step="0.01" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>category</FormLabel>
+                  <FormLabel className="text-muted-foreground">
+                    Category
+                  </FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select category" />
+                        <SelectValue placeholder="Category" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -128,28 +127,104 @@ export const CreateTransactionDialogForm = () => {
 
             <FormField
               control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel className="text-muted-foreground">Date</FormLabel>
+
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={'outline'}
+                          className={cn(
+                            'pl-3 text-left font-normal md:w-[160px]',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, 'dd/MM/yyyy')
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date('1900-01-01')
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
+                <FormItem className="flex-1">
+                  <FormLabel className="text-muted-foreground">
+                    Description
+                  </FormLabel>
+
                   <FormControl>
-                    <Input placeholder="Optional" {...field} />
+                    <Input
+                      placeholder="Write descrtion (optional)"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button
-              variant={
-                currentTransactionType === 'expense' ? 'destructive' : 'add'
-              }
-              type="submit"
-              className="w-full"
-              disabled={isPending}
-            >
-              {isPending ? 'Saving...' : 'Add Transaction'}
-            </Button>
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem className="md:w-[140px]">
+                  <FormLabel className="text-muted-foreground">
+                    Amount
+                  </FormLabel>
+
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      placeholder="Amount"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div>
+              <FormLabel className="text-muted-foreground invisible mb-2">
+                Save
+              </FormLabel>
+              <Button
+                variant={
+                  currentTransactionType === 'expense' ? 'destructive' : 'add'
+                }
+                type="submit"
+                disabled={isPending}
+                className="md:w-[140px]"
+              >
+                {isPending ? 'Saving...' : `Add ${currentTransactionType}`}
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>
