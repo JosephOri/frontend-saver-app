@@ -27,7 +27,7 @@ export const FinancialInfo = ({ transactions }: Props) => {
   return (
     <div className="grid grid-cols-3 gap-4">
       <ExpensePieChart
-        className="col-span-3 md:col-span-1 md:row-span-2"
+        className="col-span-3 md:row-span-2 lg:col-span-1"
         expenses={expenses}
       />
 

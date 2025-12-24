@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/dialog';
 import { useCreateTransactionsForm } from '@/hooks';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@repo/shared';
+import { PlusCircle } from 'lucide-react';
 
 export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
@@ -33,7 +34,10 @@ export const CreateTransactionDialogForm = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Add Transaction</Button>
+        <Button variant="add">
+          <PlusCircle />
+          Add Transaction
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -136,7 +140,14 @@ export const CreateTransactionDialogForm = () => {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button
+              variant={
+                currentTransactionType === 'expense' ? 'destructive' : 'add'
+              }
+              type="submit"
+              className="w-full"
+              disabled={isPending}
+            >
               {isPending ? 'Saving...' : 'Add Transaction'}
             </Button>
           </form>
