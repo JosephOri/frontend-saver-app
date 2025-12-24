@@ -25,9 +25,9 @@ export const FinancialInfo = ({ transactions }: Props) => {
     return expenses.reduce((sum, o) => sum + o.amount, 0) || 0;
   }, [transactions]);
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid gap-4 md:grid-cols-3">
       <ExpensePieChart
-        className="col-span-3 md:row-span-2 lg:col-span-1"
+        className="col-span-2 md:col-span-3 md:row-span-2 lg:col-span-1"
         expenses={expenses}
       />
 

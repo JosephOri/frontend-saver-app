@@ -1,8 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { type LucideIcon } from 'lucide-react';
 import { FormatedNisCurrency } from '../common';
 import { cn } from '@/lib';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Props {
   title: 'Total Expenses' | 'Total Income' | 'Balance';
@@ -21,11 +20,8 @@ export const StatCard = ({
 }: Props) => {
   return (
     <Card className={cn(className)}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 p-6">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <Icon className="text-muted-foreground h-4 w-4" />
-      </CardHeader>
-      <CardContent>
+      <CardContent className="md:grid md:grid-cols-2 md:items-center md:gap-1">
+        <CardTitle className="font-medium text-nowrap">{title}</CardTitle>
         <div
           className={cn(
             'font-bold md:text-2xl',
@@ -41,6 +37,7 @@ export const StatCard = ({
         {description && (
           <p className="text-muted-foreground text-xs">{description}</p>
         )}
+        <Icon className="text-muted-foreground h-6 w-6" />
       </CardContent>
     </Card>
   );
