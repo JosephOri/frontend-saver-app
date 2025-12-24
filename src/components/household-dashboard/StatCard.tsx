@@ -2,17 +2,25 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type LucideIcon } from 'lucide-react';
 import { FormatedNisCurrency } from '../common';
 import { cn } from '@/lib';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Props {
   title: 'Total Expenses' | 'Total Income' | 'Balance';
   value: number;
   icon: LucideIcon;
   description?: string;
+  className?: string;
 }
 
-export const StatCard = ({ title, value, icon: Icon, description }: Props) => {
+export const StatCard = ({
+  title,
+  value,
+  icon: Icon,
+  description,
+  className = '',
+}: Props) => {
   return (
-    <Card>
+    <Card className={cn(className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 p-6">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
         <Icon className="text-muted-foreground h-4 w-4" />
@@ -20,7 +28,8 @@ export const StatCard = ({ title, value, icon: Icon, description }: Props) => {
       <CardContent>
         <div
           className={cn(
-            'text-2xl font-bold',
+            'font-bold md:text-2xl',
+            'whitespace-nowrap',
             title === 'Total Expenses' && 'text-red-500',
             title === 'Total Income' && 'text-green-500',
             title === 'Balance' &&

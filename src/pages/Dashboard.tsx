@@ -10,8 +10,8 @@ const Dashboard = () => {
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
   const { data: transactions, isLoading: isTransactionsLoading } =
     useTransactions();
-
   if (isUserLoading || isTransactionsLoading) return <Loading />;
+
   return (
     <div className="p-4">
       <h1 className="text-center text-3xl font-bold">
