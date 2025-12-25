@@ -1,4 +1,4 @@
-import { type Transactions } from '@/lib';
+import { type Transaction } from '@repo/shared';
 import {
   type ColumnDef,
   flexRender,
@@ -20,11 +20,11 @@ import { transactionColumns } from './columns';
 import { DropdownTypesFilter } from './DropdownTypesFilter';
 
 interface Props {
-  data: Transactions[];
+  data: Transaction[];
 }
 
 export const TransactionsTable = ({ data }: Props) => {
-  const columns: ColumnDef<Transactions>[] = useMemo(
+  const columns: ColumnDef<Transaction>[] = useMemo(
     () => transactionColumns,
     [],
   );
