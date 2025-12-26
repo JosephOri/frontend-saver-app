@@ -1,11 +1,11 @@
-import type { Transactions } from '@repo/shared';
+import type { Transaction } from '@repo/shared';
 import { StatCard } from './StatCard';
 import { useMemo } from 'react';
 import { DollarSign, TrendingDown, TrendingUp } from 'lucide-react';
 import { ExpensePieChart } from './ExpensePieChart';
 
 interface Props {
-  transactions: Transactions[];
+  transactions: Transaction[];
 }
 
 export const FinancialInfo = ({ transactions }: Props) => {

@@ -2,7 +2,7 @@ import {
   type ExpenseCategory,
   type IncomeCategory,
   type TransactionType,
-} from '@repo/shared/src/typings';
+} from '@repo/shared';
 
 export type CreateTransactionDto = {
   amount: number;
