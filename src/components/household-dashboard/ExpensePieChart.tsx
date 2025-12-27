@@ -8,7 +8,7 @@ import {
   Legend,
 } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { Transactions } from '@repo/shared';
+import type { Transaction } from '@repo/shared';
 import { cn } from '@/lib';
 
 const COLORS = [
@@ -25,7 +25,7 @@ const COLORS = [
 ];
 
 interface Props {
-  expenses: Transactions[];
+  expenses: Transaction[];
   className?: string;
 }
 
@@ -134,7 +134,6 @@ export const ExpensePieChart = ({ expenses, className = '' }: Props) => {
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                // @ts-expect-error - Recharts types are not up to date
                 activeIndex={activeIndex}
                 activeShape={renderActiveShape}
                 data={data}

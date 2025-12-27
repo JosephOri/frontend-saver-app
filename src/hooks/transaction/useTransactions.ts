@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib';
-import type { Transaction } from '@repo/shared';
+import type { Transaction, RecurringTransaction } from '@repo/shared';
 import { type CreateTransactionDto } from '@/typings/dto/create-transaction.dto';
 import { useCurrentUser } from '../auth';
 
@@ -31,5 +31,19 @@ export const useCreateTransaction = () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
       queryClient.invalidateQueries({ queryKey: ['household'] });
     },
+  });
+};
+
+export const useRecurringTransactions = () => {
+  const { data: user } = useCurrentUser();
+  return useQuery({
+    queryKey: ['recurring-transactions'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<RecurringTransaction[]>(
+        '/transactions/recurring',
+      );
+      return data;
+    },
+    enabled: !!user?.householdId,
   });
 };
