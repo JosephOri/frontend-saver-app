@@ -1,4 +1,8 @@
-import { useCurrentUser, useTransactions } from '@/hooks';
+import {
+  useCurrentUser,
+  useTransactions,
+  useRecurringTransactions,
+} from '@/hooks';
 import {
   FinancialInfo,
   Loading,
@@ -10,6 +14,8 @@ const Dashboard = () => {
   const { data: user, isLoading: isUserLoading } = useCurrentUser();
   const { data: transactions, isLoading: isTransactionsLoading } =
     useTransactions();
+  const { data: recurringTransactions } = useRecurringTransactions();
+
   if (isUserLoading || isTransactionsLoading) return <Loading />;
 
   return (
@@ -22,7 +28,10 @@ const Dashboard = () => {
       {transactions ? (
         <div className="flex flex-col gap-6">
           <FinancialInfo transactions={transactions} />
-          <TransactionsTable data={transactions} />
+          <TransactionsTable
+            historicalData={transactions}
+            recurringRules={recurringTransactions}
+          />
         </div>
       ) : (
         <h1>Create first transaction to see data</h1>

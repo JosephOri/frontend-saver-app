@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib';
-import type { User } from '@/lib/typings';
+import type { User } from '@repo/shared';
 import { useNavigate } from 'react-router-dom';
 
 export const useCurrentUser = () => {

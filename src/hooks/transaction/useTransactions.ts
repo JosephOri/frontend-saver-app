@@ -1,14 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib';
-import type { Transactions, CreateTransactionDto } from '@repo/shared';
+import type { Transaction, RecurringTransaction } from '@repo/shared';
+import { type CreateTransactionDto } from '@/typings/dto/create-transaction.dto';
+import { useCurrentUser } from '../auth';
 
 export const useTransactions = () => {
+  const { data: user } = useCurrentUser();
   return useQuery({
     queryKey: ['transactions'],
     queryFn: async () => {
-      const { data } = await apiClient.get<Transactions[]>('/transactions');
+      const { data } = await apiClient.get<Transaction[]>('/transactions');
       return data;
     },
+    enabled: !!user?.householdId,
   });
 };
 
@@ -17,7 +21,7 @@ export const useCreateTransaction = () => {
 
   return useMutation({
     mutationFn: async (createTransactionDTO: CreateTransactionDto) => {
-      const { data } = await apiClient.post<Transactions>(
+      const { data } = await apiClient.post<Transaction>(
         '/transactions',
         createTransactionDTO,
       );
@@ -27,5 +31,19 @@ export const useCreateTransaction = () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
       queryClient.invalidateQueries({ queryKey: ['household'] });
     },
+  });
+};
+
+export const useRecurringTransactions = () => {
+  const { data: user } = useCurrentUser();
+  return useQuery({
+    queryKey: ['recurring-transactions'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<RecurringTransaction[]>(
+        '/transactions/recurring',
+      );
+      return data;
+    },
+    enabled: !!user?.householdId,
   });
 };
