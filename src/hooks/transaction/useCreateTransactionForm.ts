@@ -22,7 +22,7 @@ const formSchema = z.object({
 export type FormSchemaType = z.infer<typeof formSchema>;
 
 export const useCreateTransactionsForm = () => {
-  const { mutate: createOrder, isPending } = useCreateTransaction();
+  const { mutate: createTransaction, isPending } = useCreateTransaction();
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<FormSchemaType>({
@@ -50,7 +50,7 @@ export const useCreateTransactionsForm = () => {
       recurrenceEndDate: isRecurring ? values.recurrenceEndDate : undefined,
     };
 
-    createOrder(payload, {
+    createTransaction(payload, {
       onSuccess: () => {
         setIsOpen(false);
         form.reset();
