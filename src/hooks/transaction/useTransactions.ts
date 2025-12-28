@@ -3,11 +3,12 @@ import { apiClient } from '@/lib';
 import type { Transaction, RecurringTransaction } from '@repo/shared';
 import { type CreateTransactionDto } from '@/typings/dto/create-transaction.dto';
 import { useCurrentUser } from '../auth';
+import { queryKeys } from '@/lib/constants';
 
 export const useTransactions = () => {
   const { data: user } = useCurrentUser();
   return useQuery({
-    queryKey: ['transactions'],
+    queryKey: [queryKeys.TRANSACTIONS],
     queryFn: async () => {
       const { data } = await apiClient.get<Transaction[]>('/transactions');
       return data;

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient, type AddUserToHouseholdDto } from '@/lib';
+import { apiClient, queryKeys } from '@/lib';
+import { type AddUserToHouseholdDto } from '@/typings';
 import { useNavigate } from 'react-router-dom';
 
 export const useCreateHousehold = () => {
@@ -12,7 +13,7 @@ export const useCreateHousehold = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.CURRENT_USER] });
       navigate('/');
     },
   });
@@ -30,7 +31,7 @@ export const useAddMemberToHousehold = () => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.CURRENT_USER] });
       navigate('/');
     },
   });
