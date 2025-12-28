@@ -13,3 +13,16 @@ export const queryKeys = {
   HOUSEHOLD: 'household',
   CURRENT_USER: 'currentUser',
 } as const;
+
+export const urlSuffixes = {
+  CATEGORIES: '/categories',
+  TRANSACTIONS: '/transactions',
+  RECURRING_TRANSACTIONS: '/transactions/recurring',
+  DATE_TRANSACTION: '/transactions/date',
+  HOUSEHOLD: '/household',
+  CURRENT_USER: '/users/me',
+  ADD_USER_TO_HOUSEHOLD: '/users/add-to-household',
+  LOGIN: '/auth/login',
+  LOGOUT: '/auth/logout',
+  SIGNUP: '/auth/signup',
+};
