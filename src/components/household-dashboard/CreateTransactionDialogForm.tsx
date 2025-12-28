@@ -23,7 +23,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useCreateTransactionsForm } from '@/hooks';
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@repo/shared';
 import { CalendarIcon, PlusCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -33,10 +32,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { useCategories } from '@/hooks/categories';
+import { useMemo } from 'react';
 
 export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
     useCreateTransactionsForm();
+  const { data: categories } = useCategories();
+  const expenseCategories = useMemo(() => {
+    return categories?.filter((category) => category.type === 'expense');
+  }, [categories]);
+  const incomeCategories = useMemo(() => {
+    return categories?.filter((category) => category.type === 'income');
+  }, [categories]);
+
   const currentTransactionType = form.watch('type');
 
   return (
@@ -76,7 +85,6 @@ export const CreateTransactionDialogForm = () => {
                       <SelectContent>
                         <SelectItem value="income">Income</SelectItem>
                         <SelectItem value="expense">Expense</SelectItem>
-                        <SelectItem value="investment">Investment</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -100,28 +108,32 @@ export const CreateTransactionDialogForm = () => {
                       </FormControl>
                       <SelectContent>
                         {currentTransactionType === 'expense' &&
-                          EXPENSE_CATEGORIES.map((category) => (
+                          expenseCategories?.map((category) => (
                             <SelectItem
-                              key={category}
-                              value={category}
+                              key={category.id}
+                              value={category.value}
                               className="capitalize"
                             >
-                              {category}
+                              {category.value}
                             </SelectItem>
                           ))}
                         {currentTransactionType === 'income' &&
-                          INCOME_CATEGORIES.map((category) => (
+                          incomeCategories?.map((category) => (
                             <SelectItem
-                              key={category}
-                              value={category}
+                              key={category.id}
+                              value={category.value}
                               className="capitalize"
                             >
-                              {category}
+                              {category.value}
                             </SelectItem>
                           ))}
-                        {currentTransactionType === 'investment' && (
-                          <SelectItem value="investment">Investment</SelectItem>
-                        )}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          onClick={() => {}}
+                        >
+                          <PlusCircle /> Add Category
+                        </Button>
                       </SelectContent>
                     </Select>
                     <FormMessage />
