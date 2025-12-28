@@ -38,6 +38,7 @@ import { useMemo } from 'react';
 export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
     useCreateTransactionsForm();
+
   const { data: categories } = useCategories();
   const expenseCategories = useMemo(() => {
     return categories?.filter((category) => category.type === 'expense');
@@ -66,7 +67,6 @@ export const CreateTransactionDialogForm = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            {/* Top Section: Main Transaction Details */}
             <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-start">
               <FormField
                 control={form.control}
@@ -228,7 +228,6 @@ export const CreateTransactionDialogForm = () => {
               />
             </div>
 
-            {/* Bottom Section: Recurrence and Actions */}
             <div className="flex flex-col gap-4 md:flex-row md:items-end">
               <FormField
                 control={form.control}
