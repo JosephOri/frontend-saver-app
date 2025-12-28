@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '@/lib';
+import { apiClient, queryKeys } from '@/lib';
 import type { User } from '@repo/shared';
 import { useNavigate } from 'react-router-dom';
 
 export const useCurrentUser = () => {
   return useQuery({
-    queryKey: ['currentUser'],
+    queryKey: [queryKeys.CURRENT_USER],
     queryFn: async () => {
       const { data } = await apiClient.get<User>('/users/me');
       return data;
@@ -25,7 +25,7 @@ export const useLogin = () => {
       await apiClient.post('/auth/login', credentials);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.CURRENT_USER] });
       navigate('/');
     },
   });
@@ -40,7 +40,7 @@ export const useLogout = () => {
       await apiClient.post('/auth/logout');
     },
     onSuccess: () => {
-      queryClient.setQueryData(['currentUser'], null);
+      queryClient.setQueryData([queryKeys.CURRENT_USER], null);
       navigate('/login');
     },
   });
