@@ -23,6 +23,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useCreateTransactionsForm } from '@/hooks';
+
+import { useNavigate } from 'react-router-dom';
 import { CalendarIcon, PlusCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -38,6 +40,7 @@ import { useMemo } from 'react';
 export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
     useCreateTransactionsForm();
+  const navigate = useNavigate();
 
   const { data: categories } = useCategories();
   const expenseCategories = useMemo(() => {
@@ -130,7 +133,10 @@ export const CreateTransactionDialogForm = () => {
                         <Button
                           type="button"
                           variant="ghost"
-                          onClick={() => {}}
+                          onClick={() => {
+                            setIsOpen(false);
+                            navigate('/categories');
+                          }}
                         >
                           <PlusCircle /> Add Category
                         </Button>
