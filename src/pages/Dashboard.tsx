@@ -27,7 +27,10 @@ const Dashboard = () => {
 
       {transactions ? (
         <div className="flex flex-col gap-6">
-          <FinancialInfo transactions={transactions} />
+          <FinancialInfo
+            transactions={transactions}
+            recurringTransactions={recurringTransactions || []}
+          />
           <TransactionsTable
             historicalData={transactions}
             recurringRules={recurringTransactions}
