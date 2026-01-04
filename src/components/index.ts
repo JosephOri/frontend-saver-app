@@ -1,3 +1,4 @@
+export * from './MonthControl';
 export * from './household-dashboard';
 export * from './auth';
 export * from './common';

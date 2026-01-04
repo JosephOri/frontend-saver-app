@@ -21,6 +21,7 @@ import {
 interface Props {
   transactions: Transaction[];
   recurringTransactions: RecurringTransaction[];
+  selectedMonth: Date;
 }
 
 const calculateNextDate = (
@@ -44,6 +45,7 @@ const calculateNextDate = (
 export const FinancialInfo = ({
   transactions,
   recurringTransactions,
+  selectedMonth,
 }: Props) => {
   const incomes = useMemo(() => {
     return transactions?.filter((o) => o.type === 'income');
@@ -51,7 +53,7 @@ export const FinancialInfo = ({
 
   const totalIncomeAmount = useMemo(() => {
     return incomes.reduce((sum, o) => sum + o.amount, 0) || 0;
-  }, [transactions]);
+  }, [incomes]);
 
   const expenses = useMemo(() => {
     return transactions?.filter((o) => o.type === 'expense');
@@ -67,50 +69,61 @@ export const FinancialInfo = ({
 
   const forecastedBalance = useMemo(() => {
     const now = new Date();
-    const endOfCurrentMonth = endOfMonth(now);
+    const isCurrentMonth = isSameMonth(selectedMonth, now);
+    const endOfViewMonth = endOfMonth(selectedMonth);
 
-    // 1. Realized Amounts (Transactions in current month)
-    const realizedExpenses = expenses
-      .filter((t) => isSameMonth(new Date(t.date), now))
-      .reduce((sum, t) => sum + t.amount, 0);
-
-    const realizedIncome = incomes
-      .filter((t) => isSameMonth(new Date(t.date), now))
-      .reduce((sum, t) => sum + t.amount, 0);
+    // 1. Realized Amounts (Transactions in selected month)
+    // using transactions passed as prop which should already be filtered for this month
+    const realizedExpenses = expenses.reduce((sum, t) => sum + t.amount, 0);
+    const realizedIncome = incomes.reduce((sum, t) => sum + t.amount, 0);
 
     // 2. Projected Recurring Amounts
     let projectedExpenses = 0;
     let projectedIncome = 0;
 
-    activeRecurringTransactions.forEach((recurring) => {
-      let nextRun = new Date(recurring.nextRunDate);
+    // Only project if we are viewing current or future months
+    if (!isBefore(endOfViewMonth, now)) {
+      activeRecurringTransactions.forEach((recurring) => {
+        let nextRun = new Date(recurring.nextRunDate);
 
-      while (
-        isBefore(nextRun, endOfCurrentMonth) ||
-        nextRun.getTime() === endOfCurrentMonth.getTime()
-      ) {
-        if (
-          recurring.endDate &&
-          isAfter(nextRun, new Date(recurring.endDate))
+        // Advance to start of selected month if needed
+        while (isBefore(nextRun, selectedMonth)) {
+          nextRun = calculateNextDate(nextRun, recurring.interval);
+        }
+
+        while (
+          isBefore(nextRun, endOfViewMonth) ||
+          nextRun.getTime() === endOfViewMonth.getTime()
         ) {
-          break;
-        }
+          if (
+            recurring.endDate &&
+            isAfter(nextRun, new Date(recurring.endDate))
+          ) {
+            break;
+          }
 
-        if (recurring.type === 'expense') {
-          projectedExpenses += recurring.amount;
-        } else if (recurring.type === 'income') {
-          projectedIncome += recurring.amount;
-        }
+          // If current month, only include if distinctively in future relative to now
+          // If future month, include everything
+          const shouldInclude = !isCurrentMonth || isAfter(nextRun, now);
 
-        nextRun = calculateNextDate(nextRun, recurring.interval);
-      }
-    });
+          if (shouldInclude) {
+            if (recurring.type === 'expense') {
+              projectedExpenses += recurring.amount;
+            } else if (recurring.type === 'income') {
+              projectedIncome += recurring.amount;
+            }
+          }
+
+          nextRun = calculateNextDate(nextRun, recurring.interval);
+        }
+      });
+    }
 
     const totalProjectedIncome = realizedIncome + projectedIncome;
     const totalProjectedExpenses = realizedExpenses + projectedExpenses;
 
     return totalProjectedIncome - totalProjectedExpenses;
-  }, [expenses, incomes, activeRecurringTransactions]);
+  }, [expenses, incomes, activeRecurringTransactions, selectedMonth]);
   return (
     <div className="flex flex-col gap-4">
       <div className="w-full md:w-1/2">

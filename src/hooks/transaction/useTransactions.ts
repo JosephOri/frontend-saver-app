@@ -5,13 +5,17 @@ import { type CreateTransactionDto } from '@/typings/dto/create-transaction.dto'
 import { useCurrentUser } from '../auth';
 import { queryKeys, urlSuffixes } from '@/lib/constants';
 
-export const useTransactions = () => {
+export const useTransactions = (startDate?: string, endDate?: string) => {
   const { data: user } = useCurrentUser();
   return useQuery({
-    queryKey: [queryKeys.TRANSACTIONS],
+    queryKey: [queryKeys.TRANSACTIONS, startDate, endDate],
     queryFn: async () => {
+      const params = new URLSearchParams();
+      if (startDate) params.append('startDate', startDate);
+      if (endDate) params.append('endDate', endDate);
+
       const { data } = await apiClient.get<Transaction[]>(
-        urlSuffixes.TRANSACTIONS,
+        `${urlSuffixes.TRANSACTIONS}?${params.toString()}`,
       );
       return data;
     },
