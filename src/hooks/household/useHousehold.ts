@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient, type AddUserToHouseholdDto } from '@/lib';
+import { apiClient, queryKeys, urlSuffixes } from '@/lib';
+import { type AddUserToHouseholdDto } from '@/typings';
 import { useNavigate } from 'react-router-dom';
 
 export const useCreateHousehold = () => {
@@ -8,11 +9,11 @@ export const useCreateHousehold = () => {
 
   return useMutation({
     mutationFn: async () => {
-      const { data } = await apiClient.post('/household', {});
+      const { data } = await apiClient.post(urlSuffixes.HOUSEHOLD, {});
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.CURRENT_USER] });
       navigate('/');
     },
   });
@@ -24,13 +25,13 @@ export const useAddMemberToHousehold = () => {
 
   return useMutation({
     mutationFn: async ({ targetUserName, adminId }: AddUserToHouseholdDto) => {
-      await apiClient.post('/users/add-to-household', {
+      await apiClient.post(urlSuffixes.ADD_USER_TO_HOUSEHOLD, {
         targetUserName,
         adminId,
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.CURRENT_USER] });
       navigate('/');
     },
   });

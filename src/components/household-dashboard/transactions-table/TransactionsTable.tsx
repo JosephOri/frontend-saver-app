@@ -20,7 +20,7 @@ import {
 import { useMemo, useState } from 'react';
 import { transactionColumns } from './columns';
 import { DropdownTypesFilter } from './DropdownTypesFilter';
-import { projectFutureTransactions } from '@/utils/transactionProjection';
+import { projectFutureTransactions } from '@/lib/utils/transactionProjection';
 import { addMonths } from 'date-fns';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';

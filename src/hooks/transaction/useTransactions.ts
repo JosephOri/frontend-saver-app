@@ -3,13 +3,16 @@ import { apiClient } from '@/lib';
 import type { Transaction, RecurringTransaction } from '@repo/shared';
 import { type CreateTransactionDto } from '@/typings/dto/create-transaction.dto';
 import { useCurrentUser } from '../auth';
+import { queryKeys, urlSuffixes } from '@/lib/constants';
 
 export const useTransactions = () => {
   const { data: user } = useCurrentUser();
   return useQuery({
-    queryKey: ['transactions'],
+    queryKey: [queryKeys.TRANSACTIONS],
     queryFn: async () => {
-      const { data } = await apiClient.get<Transaction[]>('/transactions');
+      const { data } = await apiClient.get<Transaction[]>(
+        urlSuffixes.TRANSACTIONS,
+      );
       return data;
     },
     enabled: !!user?.householdId,
@@ -22,14 +25,14 @@ export const useCreateTransaction = () => {
   return useMutation({
     mutationFn: async (createTransactionDTO: CreateTransactionDto) => {
       const { data } = await apiClient.post<Transaction>(
-        '/transactions',
+        urlSuffixes.TRANSACTIONS,
         createTransactionDTO,
       );
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      queryClient.invalidateQueries({ queryKey: ['household'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.TRANSACTIONS] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.HOUSEHOLD] });
     },
   });
 };
@@ -37,10 +40,10 @@ export const useCreateTransaction = () => {
 export const useRecurringTransactions = () => {
   const { data: user } = useCurrentUser();
   return useQuery({
-    queryKey: ['recurring-transactions'],
+    queryKey: [queryKeys.RECURRING_TRANSACTIONS],
     queryFn: async () => {
       const { data } = await apiClient.get<RecurringTransaction[]>(
-        '/transactions/recurring',
+        urlSuffixes.RECURRING_TRANSACTIONS,
       );
       return data;
     },

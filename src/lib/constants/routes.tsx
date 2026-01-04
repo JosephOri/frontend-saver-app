@@ -3,7 +3,8 @@ import Home from '@/pages/Home';
 import Inbox from '@/pages/Inbox';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
-import { HomeIcon, InboxIcon } from 'lucide-react';
+import CategoriesPage from '@/pages/CategoriesPage';
+import { HomeIcon, InboxIcon, List } from 'lucide-react';
 import { FaDashcube } from 'react-icons/fa';
 
 export const routes = {
@@ -35,6 +36,12 @@ export const routes = {
       element: <Inbox />,
       icon: InboxIcon,
       label: 'Inbox',
+    },
+    {
+      path: '/categories',
+      element: <CategoriesPage />,
+      icon: List,
+      label: 'Categories',
     },
   ],
 };

@@ -1,13 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '@/lib';
+import { apiClient, queryKeys, urlSuffixes } from '@/lib';
 import type { User } from '@repo/shared';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const useCurrentUser = () => {
   return useQuery({
-    queryKey: ['currentUser'],
+    queryKey: [queryKeys.CURRENT_USER],
     queryFn: async () => {
-      const { data } = await apiClient.get<User>('/users/me');
+      const { data } = await apiClient.get<User>(urlSuffixes.CURRENT_USER);
       return data;
     },
     staleTime: 1000 * 60 * 60 * 24,
@@ -22,10 +23,10 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: async (credentials: { email: string; password: string }) => {
-      await apiClient.post('/auth/login', credentials);
+      await apiClient.post(urlSuffixes.LOGIN, credentials);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.CURRENT_USER] });
       navigate('/');
     },
   });
@@ -37,10 +38,10 @@ export const useLogout = () => {
 
   return useMutation({
     mutationFn: async () => {
-      await apiClient.post('/auth/logout');
+      await apiClient.post(urlSuffixes.LOGOUT);
     },
     onSuccess: () => {
-      queryClient.setQueryData(['currentUser'], null);
+      queryClient.setQueryData([queryKeys.CURRENT_USER], null);
       navigate('/login');
     },
   });
@@ -55,10 +56,14 @@ export const useRegister = () => {
       email: string;
       password: string;
     }) => {
-      await apiClient.post('/auth/signup', userData);
+      await apiClient.post(urlSuffixes.SIGNUP, userData);
     },
     onSuccess: () => {
+      toast.success('You have successfully registered');
       navigate('/login');
+    },
+    onError: () => {
+      toast.error('Something went wrong');
     },
   });
 };

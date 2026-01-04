@@ -23,7 +23,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { useCreateTransactionsForm } from '@/hooks';
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@repo/shared';
+
+import { useNavigate } from 'react-router-dom';
 import { CalendarIcon, PlusCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -33,10 +34,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { useCategories } from '@/hooks/categories';
+import { useMemo } from 'react';
 
 export const CreateTransactionDialogForm = () => {
   const { form, onSubmit, isPending, isOpen, setIsOpen } =
     useCreateTransactionsForm();
+  const navigate = useNavigate();
+
+  const { data: categories } = useCategories();
+  const expenseCategories = useMemo(() => {
+    return categories?.filter((category) => category.type === 'expense');
+  }, [categories]);
+  const incomeCategories = useMemo(() => {
+    return categories?.filter((category) => category.type === 'income');
+  }, [categories]);
+
   const currentTransactionType = form.watch('type');
 
   return (
@@ -57,7 +70,6 @@ export const CreateTransactionDialogForm = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
-            {/* Top Section: Main Transaction Details */}
             <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-start">
               <FormField
                 control={form.control}
@@ -76,7 +88,6 @@ export const CreateTransactionDialogForm = () => {
                       <SelectContent>
                         <SelectItem value="income">Income</SelectItem>
                         <SelectItem value="expense">Expense</SelectItem>
-                        <SelectItem value="investment">Investment</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -100,28 +111,35 @@ export const CreateTransactionDialogForm = () => {
                       </FormControl>
                       <SelectContent>
                         {currentTransactionType === 'expense' &&
-                          EXPENSE_CATEGORIES.map((category) => (
+                          expenseCategories?.map((category) => (
                             <SelectItem
-                              key={category}
-                              value={category}
+                              key={category.id}
+                              value={category.value}
                               className="capitalize"
                             >
-                              {category}
+                              {category.value}
                             </SelectItem>
                           ))}
                         {currentTransactionType === 'income' &&
-                          INCOME_CATEGORIES.map((category) => (
+                          incomeCategories?.map((category) => (
                             <SelectItem
-                              key={category}
-                              value={category}
+                              key={category.id}
+                              value={category.value}
                               className="capitalize"
                             >
-                              {category}
+                              {category.value}
                             </SelectItem>
                           ))}
-                        {currentTransactionType === 'investment' && (
-                          <SelectItem value="investment">Investment</SelectItem>
-                        )}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          onClick={() => {
+                            setIsOpen(false);
+                            navigate('/categories');
+                          }}
+                        >
+                          <PlusCircle /> Add Category
+                        </Button>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -216,7 +234,6 @@ export const CreateTransactionDialogForm = () => {
               />
             </div>
 
-            {/* Bottom Section: Recurrence and Actions */}
             <div className="flex flex-col gap-4 md:flex-row md:items-end">
               <FormField
                 control={form.control}
