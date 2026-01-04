@@ -10,6 +10,7 @@ export const queryKeys = {
   TRANSACTIONS: 'transactions',
   RECURRING_TRANSACTIONS: 'recurringTransactions',
   DATE_TRANSACTION: 'dateTransaction',
+  FORECAST: 'forecast',
   HOUSEHOLD: 'household',
   CURRENT_USER: 'currentUser',
 } as const;
@@ -18,6 +19,7 @@ export const urlSuffixes = {
   CATEGORIES: '/categories',
   TRANSACTIONS: '/transactions',
   RECURRING_TRANSACTIONS: '/transactions/recurring',
+  FORECAST: '/transactions/forecast',
   DATE_TRANSACTION: '/transactions/date',
   HOUSEHOLD: '/household',
   CURRENT_USER: '/users/me',
