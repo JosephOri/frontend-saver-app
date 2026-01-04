@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient, queryKeys, urlSuffixes } from '@/lib';
 import type { User } from '@repo/shared';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const useCurrentUser = () => {
   return useQuery({
@@ -58,7 +59,11 @@ export const useRegister = () => {
       await apiClient.post(urlSuffixes.SIGNUP, userData);
     },
     onSuccess: () => {
+      toast.success('You have successfully registered');
       navigate('/login');
+    },
+    onError: () => {
+      toast.error('Something went wrong');
     },
   });
 };
